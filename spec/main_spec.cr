@@ -49,5 +49,34 @@ describe Tdd::Main do
         end
       end
     end
+
+    context "when using chained execution" do
+      in_array = (-10..30).to_a
+      out_array = Tdd::Main.new(in_array).validify(
+        valid_proc: ->(i : Int32) { i >= 5 }
+      ).validify(
+        valid_proc: ->(i : Int32) { i < 20 }
+      ).validify(
+        valid_proc: ->(i : Int32) { i.even? }
+      ).in_object.as(Array(Int32))
+
+      it "returns only more or equal than 5" do
+        out_array.each do |i|
+          (i >= 5).should eq(true)
+        end
+      end
+
+      it "returns only less than 20" do
+        out_array.each do |i|
+          (i < 20).should eq(true)
+        end
+      end
+
+      it "returns only even" do
+        out_array.each do |i|
+          i.even?.should eq(true)
+        end
+      end
+    end
   end
 end
