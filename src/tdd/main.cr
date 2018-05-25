@@ -7,7 +7,7 @@ module Tdd
     def initialize(@in_object : InOutObject)
     end
 
-    def call
+    def less_than_5
       if in_object.as?(Array)
         in_object.as(Array(Int32)).select do |i|
           check_object(i)
